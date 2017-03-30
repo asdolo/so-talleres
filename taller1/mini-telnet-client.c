@@ -16,6 +16,8 @@ main(int argc, char **argv)
 	ssize_t w;
 	int s;
 
+	char bufVuelta[MSGLEN + 1];
+
 
 	ssize_t r;
 
@@ -72,7 +74,7 @@ main(int argc, char **argv)
 		
 
 		/* ejercicio 1.3 */
-		r = recv(s, buf, sizeof(buf) - 1, 0);
+		r = recv(s, bufVuelta, sizeof(bufVuelta) - 1, 0);
 		if (r == 0) {
 			fputs("recv vacío\n", stderr);
 			break;
@@ -82,8 +84,9 @@ main(int argc, char **argv)
 			continue;
 		}
 
+		bufVuelta[r] = 0;
 
-		printf("%s\n", buf);
+		printf("%s\n", bufVuelta);
 
 
 	}

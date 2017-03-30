@@ -60,17 +60,13 @@ main(int argc, char **argv)
 
 		/* transforma lo recibido en un string de C */
 		buf[r] = '\0';
-		printf("comando: %s", buf);
-
-		/* ejecuta el comando */
-		dup2(c,STDOUT_FILENO);
-		(void)system(buf);
 
 		/* ejercicio 1.3 */
-		if (send(c, "A", 2, 0) == -1) {
-			perror("send");
-			exit(1);
-		}
+		dup2(c, STDERR_FILENO);
+		dup2(c, STDOUT_FILENO);
+
+				/* ejecuta el comando */		
+		(void)system(buf);
 	}
 
 	/* cierra los sockets */
