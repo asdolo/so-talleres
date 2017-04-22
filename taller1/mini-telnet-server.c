@@ -60,14 +60,48 @@ main(int argc, char **argv)
 
 		/* transforma lo recibido en un string de C */
 		buf[r] = '\0';
+		
+		printf("comando: %s", buf);
 
-		/* ejercicio 1.3 */
-		dup2(c, STDERR_FILENO);
-		dup2(c, STDOUT_FILENO);
+		int pid=fork();
+		if (pid==0)
+		{
+			//El STDOUT de la ejecucion va al cliente 
+			dup2(c,STDOUT_FILENO);
+			//El STDERR de la ejecucion va al cliente 
+			dup2(c,STDERR_FILENO);
+			execl("/bin/sh", "sh", "-c", &buf, (char *) 0);
+			
+		}
+		else{
+			wait(NULL);
+			if (send(c, "END\n", sizeof("END\n") - 1, 0) == -1) {
+				perror("send");
+				exit(1);
+			}
 
-				/* ejecuta el comando */		
+
+
+		}
+	/*	
+		int stdoutPosta = dup(STDOUT_FILENO); 
+		int stdErrPosta = dup(STDERR_FILENO);
+
+		//El STDOUT de la ejecucion va al cliente 
+		dup2(c,STDOUT_FILENO);
+		//El STDERR de la ejecucion va al cliente 
+		dup2(c,STDERR_FILENO);
+		// ejecuta el comando 
 		(void)system(buf);
+		printf("END\n");
+
+		dup2(stdoutPosta,STDOUT_FILENO);
+		dup2(stdErrPosta,STDERR_FILENO);
+		close(stdoutPosta);
+		close(stdErrPosta);
+		*/
 	}
+
 
 	/* cierra los sockets */
 	close(c);

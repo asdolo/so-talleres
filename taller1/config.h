@@ -1,4 +1,4 @@
 #define CMDSEP "END\n"
 #define ENDMSG "chau\n"
-#define MSGLEN 102400
-#define PORT 5682
+#define MSGLEN 1024
+#define PORT 1234

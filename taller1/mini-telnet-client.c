@@ -10,15 +10,12 @@
 int
 main(int argc, char **argv)
 {
+	char buf2[MSGLEN + 1];
 	char *buf;
 	struct sockaddr_in name;
 	size_t bufsiz;
 	ssize_t w;
 	int s;
-
-	char bufVuelta[MSGLEN + 1];
-
-
 	ssize_t r;
 
 	if (argc != 2) {
@@ -71,10 +68,11 @@ main(int argc, char **argv)
 			exit(1);
 		}
 
-		
 
-		/* ejercicio 1.3 */
-		r = recv(s, bufVuelta, sizeof(bufVuelta) - 1, 0);
+
+
+
+		r = recv(s, buf2, sizeof(buf2) - 1, 0);
 		if (r == 0) {
 			fputs("recv vacío\n", stderr);
 			break;
@@ -83,11 +81,20 @@ main(int argc, char **argv)
 			perror("recv");
 			continue;
 		}
+		buf2[r] = '\0';
+		printf("%s", buf2);
 
-		bufVuelta[r] = 0;
-
-		printf("%s\n", bufVuelta);
-
+		r = recv(s, buf2, sizeof(buf2) - 1, 0);
+		if (r == 0) {
+			fputs("recv vacío\n", stderr);
+			break;
+		}
+		if (r == -1) {
+			perror("recv");
+			continue;
+		}
+		buf2[r] = '\0';
+		printf("%s", buf2);
 
 	}
 
