@@ -1,6 +1,6 @@
 CC = c99
 
-BIN = ej1 launch
+BIN = hello launch
 
 %: %.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
