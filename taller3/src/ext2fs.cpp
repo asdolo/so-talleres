@@ -292,8 +292,8 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 	unsigned int cant_entradas_tabla = block_size/sizeof(uint);
 
 	char buffer[block_size];
-
-
+	char buffer2[block_size];
+	char buffer3[block_size];
 
 	unsigned int res = 0;
 	if (block_number < 12)
@@ -310,8 +310,11 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 		if (block_number >= 0 && block_number < cant_entradas_tabla)
 		{
 			// es indirección simple
+
+			// leo el bloque donde está la tabla de indirección simple
 			read_block(inode->block[12], buffer);
  			
+ 			// obtengo la dirección del bloque
  			res = ((uint*) buffer)[block_number];
 		}
 		else
@@ -323,7 +326,14 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 			if (block_number >= 0 && block_number < cant_entradas_tabla*cant_entradas_tabla)
 			{
 				// es indirección doble
-				res = inode->block[13][block_number/cant_entradas_tabla][block_number % cant_entradas_tabla];
+
+				// leo el bloque donde está la tabla de indirección doble
+				read_block(inode->block[13], buffer);
+				// leo el bloque donde está la tabla de indirección simple
+				read_block(buffer[block_number/cant_entradas_tabla], buffer2)
+				
+				// obtengo la dirección del bloque
+				res = buffer2[block_number % cant_entradas_tabla];
 			}
 			else
 			{
@@ -331,7 +341,16 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 				block_number -= cant_entradas_tabla*cant_entradas_tabla;
 
 				// es indirección triple sí o sí
-				res = inode->block[14][block_number/(cant_entradas_tabla*cant_entradas_tabla)][(block_number/cant_entradas_tabla) % cant_entradas_tabla][block_number % cant_entradas_tabla];
+
+				// leo el bloque donde está la tabla de indirección triple
+				read_block(inode->block[14], buffer);
+				// leo el bloque donde está la tabla de indirección doble
+				read_block(buffer[block_number/(cant_entradas_tabla*cant_entradas_tabla)], buffer2);
+				// leo el bloque donde está la tabla de indirección simple
+				read_block(buffer2[(block_number/cant_entradas_tabla) % cant_entradas_tabla], buffer3);
+				
+				// obtengo la dirección del bloque
+				res = buffer3[block_number % cant_entradas_tabla];
 			}
 
 		}
