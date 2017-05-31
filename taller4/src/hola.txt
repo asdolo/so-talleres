@@ -1,0 +1,121 @@
+1605  execve("./script.sh", ["./script.sh"], [/* 21 vars */]) = 0
+1605  brk(0)                            = 0x8190000
+1605  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+1605  mmap2(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7742000
+1605  access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+1605  open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1605  fstat64(3, {st_mode=S_IFREG|0644, st_size=29854, ...}) = 0
+1605  mmap2(NULL, 29854, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb773a000
+1605  close(3)                          = 0
+1605  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+1605  open("/lib/i386-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3
+1605  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0PW\0\0004\0\0\0"..., 512) = 512
+1605  fstat64(3, {st_mode=S_IFREG|0644, st_size=121024, ...}) = 0
+1605  mmap2(NULL, 124748, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb771b000
+1605  mmap2(0xb7737000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b) = 0xb7737000
+1605  close(3)                          = 0
+1605  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+1605  open("/lib/i386-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+1605  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0`\n\0\0004\0\0\0"..., 512) = 512
+1605  fstat64(3, {st_mode=S_IFREG|0644, st_size=13940, ...}) = 0
+1605  mmap2(NULL, 16504, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb7716000
+1605  mmap2(0xb7719000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2) = 0xb7719000
+1605  close(3)                          = 0
+1605  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+1605  open("/lib/i386-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1605  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0000\226\1\0004\0\0\0"..., 512) = 512
+1605  fstat64(3, {st_mode=S_IFREG|0755, st_size=1713640, ...}) = 0
+1605  mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7715000
+1605  mmap2(NULL, 1723100, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb7570000
+1605  mmap2(0xb770f000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19f) = 0xb770f000
+1605  mmap2(0xb7712000, 10972, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xb7712000
+1605  close(3)                          = 0
+1605  mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb756f000
+1605  set_thread_area({entry_number:-1 -> 6, base_addr:0xb756f6c0, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+1605  mprotect(0xb770f000, 8192, PROT_READ) = 0
+1605  mprotect(0xb7719000, 4096, PROT_READ) = 0
+1605  mprotect(0xb7737000, 8192, PROT_READ) = 0
+1605  mprotect(0x8124000, 4096, PROT_READ) = 0
+1605  mprotect(0xb7765000, 4096, PROT_READ) = 0
+1605  munmap(0xb773a000, 29854)         = 0
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  open("/dev/tty", O_RDWR|O_NONBLOCK|O_LARGEFILE) = 3
+1605  close(3)                          = 0
+1605  brk(0)                            = 0x8190000
+1605  brk(0x8191000)                    = 0x8191000
+1605  open("/usr/lib/locale/locale-archive", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 3
+1605  fstat64(3, {st_mode=S_IFREG|0644, st_size=5488128, ...}) = 0
+1605  mmap2(NULL, 2097152, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb736f000
+1605  close(3)                          = 0
+1605  brk(0x8192000)                    = 0x8192000
+1605  brk(0x8193000)                    = 0x8193000
+1605  getuid32()                        = 0
+1605  getgid32()                        = 0
+1605  geteuid32()                       = 0
+1605  getegid32()                       = 0
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  time(NULL)                        = 1496186885
+1605  brk(0x8194000)                    = 0x8194000
+1605  open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3
+1605  fstat64(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+1605  mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7741000
+1605  read(3, "MemTotal:         507536 kB\nMemF"..., 1024) = 1024
+1605  close(3)                          = 0
+1605  munmap(0xb7741000, 4096)          = 0
+1605  brk(0x8195000)                    = 0x8195000
+1605  rt_sigaction(SIGCHLD, {SIG_DFL, [], SA_RESTART}, {SIG_DFL, [], 0}, 8) = 0
+1605  rt_sigaction(SIGCHLD, {SIG_DFL, [], SA_RESTART}, {SIG_DFL, [], SA_RESTART}, 8) = 0
+1605  rt_sigaction(SIGINT, {SIG_DFL, [], 0}, {SIG_DFL, [], 0}, 8) = 0
+1605  rt_sigaction(SIGINT, {SIG_DFL, [], 0}, {SIG_DFL, [], 0}, 8) = 0
+1605  rt_sigaction(SIGQUIT, {SIG_DFL, [], 0}, {SIG_DFL, [], 0}, 8) = 0
+1605  rt_sigaction(SIGQUIT, {SIG_DFL, [], 0}, {SIG_DFL, [], 0}, 8) = 0
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  rt_sigaction(SIGQUIT, {SIG_IGN, [], 0}, {SIG_DFL, [], 0}, 8) = 0
+1605  uname({sys="Linux", node="vmso", ...}) = 0
+1605  brk(0x8196000)                    = 0x8196000
+1605  stat64("/home/alumno/hostremoto/Desktop/drivers", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+1605  stat64(".", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+1605  getpid()                          = 1605
+1605  open("/usr/lib/i386-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
+1605  fstat64(3, {st_mode=S_IFREG|0644, st_size=26256, ...}) = 0
+1605  mmap2(NULL, 26256, PROT_READ, MAP_SHARED, 3, 0) = 0xb773b000
+1605  close(3)                          = 0
+1605  getppid()                         = 1604
+1605  gettimeofday({1496186885, 826928}, NULL) = 0
+1605  brk(0x8197000)                    = 0x8197000
+1605  brk(0x8198000)                    = 0x8198000
+1605  getpgrp()                         = 1604
+1605  rt_sigaction(SIGCHLD, {0x8085390, [], SA_RESTART}, {SIG_DFL, [], SA_RESTART}, 8) = 0
+1605  getrlimit(RLIMIT_NPROC, {rlim_cur=3851, rlim_max=3851}) = 0
+1605  brk(0x8199000)                    = 0x8199000
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  open("./script.sh", O_RDONLY|O_LARGEFILE) = 3
+1605  ioctl(3, SNDCTL_TMR_TIMEBASE or TCGETS, 0xbfc24c08) = -1 ENOSYS (Function not implemented)
+1605  _llseek(3, 0, [0], SEEK_CUR)      = 0
+1605  read(3, "#!/bin/bash\necho \"hola\" > /dev/n"..., 80) = 36
+1605  _llseek(3, 0, [0], SEEK_SET)      = 0
+1605  getrlimit(RLIMIT_NOFILE, {rlim_cur=1024, rlim_max=4*1024}) = 0
+1605  fcntl64(255, F_GETFD)             = -1 EBADF (Bad file descriptor)
+1605  dup2(3, 255)                      = 255
+1605  close(3)                          = 0
+1605  fcntl64(255, F_SETFD, FD_CLOEXEC) = 0
+1605  fcntl64(255, F_GETFL)             = 0x8000 (flags O_RDONLY|O_LARGEFILE)
+1605  fstat64(255, {st_mode=S_IFREG|0755, st_size=36, ...}) = 0
+1605  _llseek(255, 0, [0], SEEK_CUR)    = 0
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  read(255, "#!/bin/bash\necho \"hola\" > /dev/n"..., 36) = 36
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  open("/dev/null", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0666) = 3
+1605  fcntl64(1, F_GETFD)               = 0
+1605  fcntl64(1, F_DUPFD, 10)           = 10
+1605  fcntl64(1, F_GETFD)               = 0
+1605  fcntl64(10, F_SETFD, FD_CLOEXEC)  = 0
+1605  dup2(3, 1)                        = 1
+1605  close(3)                          = 0
+1605  write(1, "hola\n", 5)             = 5
+1605  dup2(10, 1)                       = 1
+1605  fcntl64(10, F_GETFD)              = 0x1 (flags FD_CLOEXEC)
+1605  close(10)                         = 0
+1605  rt_sigprocmask(SIG_BLOCK, NULL, [], 8) = 0
+1605  read(255, "", 36)                 = 0
+1605  exit_group(0)                     = ?
