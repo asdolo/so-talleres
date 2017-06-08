@@ -282,7 +282,29 @@ struct Ext2FSInode * Ext2FS::load_inode(unsigned int inode_number)
 {
 	//TODO: Ejercicio 2
 
+	unsigned int block_size = 1024 << _superblock->log_block_size;
+
+	unsigned int grupoDelInodo=blockgroup_for_inode(inode_number);
+
+	Ext2FSBlockGroupDescriptor* blockGroupDescriptor = block_group(grupoDelInodo);
+	unsigned int bloqueTablaDeInodos=blockGroupDescriptor->inode_table;
+	unsigned int offset = blockgroup_inode_index(inode_number);
+
+	unsigned int inodeSize = superblock.inode_size;
+
+	unsigned int inodes_per_block = block_size / inode_size;
+
+
+	unsigned int bloquePosta = bloqueTablaDeInodos + (offset*inode_size / block_size);
+
+
+	char buffer[block_size];
+	read_block(bloquePosta,buffer);
+
+	return (* Ext2FSInode) (((inode_size*) buffer)[offset % (inodes_per_block)]);
+
 }
+
 
 unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int block_number)
 {
