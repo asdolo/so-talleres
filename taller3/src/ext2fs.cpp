@@ -5,6 +5,8 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include <stdio.h>      /* printf, scanf, NULL */
+#include <stdlib.h>     /* malloc, free, rand */
 
 Ext2FS::Ext2FS(HDD & disk, unsigned char pnumber) : _hdd(disk), _partition_number(pnumber)
 {
@@ -252,7 +254,7 @@ struct Ext2FSInode * Ext2FS::inode_for_path(const char * path)
 	while(pathtok != NULL)
 	{
 		struct Ext2FSInode * prev_inode = inode;
-		// std::cerr << "pathtok: " << pathtok << std::endl;
+		std::cerr << "pathtok: " << pathtok << std::endl;
 		inode = get_file_inode_from_dir_inode(prev_inode, pathtok);
 		pathtok = strtok(NULL, PATH_DELIM);
 
@@ -290,18 +292,30 @@ struct Ext2FSInode * Ext2FS::load_inode(unsigned int inode_number)
 	unsigned int bloqueTablaDeInodos=blockGroupDescriptor->inode_table;
 	unsigned int offset = blockgroup_inode_index(inode_number);
 
-	unsigned int inodeSize = superblock.inode_size;
+	unsigned int inodeSize = _superblock->inode_size;
 
-	unsigned int inodes_per_block = block_size / inode_size;
-
-
-	unsigned int bloquePosta = bloqueTablaDeInodos + (offset*inode_size / block_size);
+	unsigned int inodes_per_block = block_size / inodeSize;
 
 
-	char buffer[block_size];
+	unsigned int bloquePosta = bloqueTablaDeInodos + (offset*inodeSize / block_size);
+
+
+	unsigned char buffer[block_size];
 	read_block(bloquePosta,buffer);
 
-	return (* Ext2FSInode) (((inode_size*) buffer)[offset % (inodes_per_block)]);
+
+
+
+
+
+		
+
+		Ext2FSInode * inodo_bonito = (Ext2FSInode*)malloc(superblock()->inode_size);
+	*inodo_bonito = *((struct Ext2FSInode *) (buffer + ((offset%inodes_per_block) * inodeSize)));
+
+
+	return  inodo_bonito ;
+
 
 }
 
@@ -311,11 +325,11 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 
 	//TODO: Ejercicio 1
 	unsigned int block_size = 1024 << _superblock->log_block_size;
-	unsigned int cant_entradas_tabla = block_size/sizeof(uint);
+	unsigned int cant_entradas_tabla = block_size/sizeof(unsigned int);
 
-	char buffer[block_size];
-	char buffer2[block_size];
-	char buffer3[block_size];
+	unsigned char buffer[block_size];
+	unsigned char buffer2[block_size];
+	unsigned char buffer3[block_size];
 
 	unsigned int res = 0;
 	if (block_number < 12)
@@ -337,7 +351,7 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 			read_block(inode->block[12], buffer);
  			
  			// obtengo la dirección del bloque
- 			res = ((uint*) buffer)[block_number];
+ 			res = ((unsigned int*) buffer)[block_number];
 		}
 		else
 		{
@@ -352,7 +366,7 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 				// leo el bloque donde está la tabla de indirección doble
 				read_block(inode->block[13], buffer);
 				// leo el bloque donde está la tabla de indirección simple
-				read_block(buffer[block_number/cant_entradas_tabla], buffer2)
+				read_block(buffer[block_number/cant_entradas_tabla], buffer2);
 				
 				// obtengo la dirección del bloque
 				res = buffer2[block_number % cant_entradas_tabla];
@@ -380,7 +394,7 @@ unsigned int Ext2FS::get_block_address(struct Ext2FSInode * inode, unsigned int 
 		
 
 	}
-
+return res;
 
 }
 
@@ -401,13 +415,61 @@ struct Ext2FSInode * Ext2FS::get_file_inode_from_dir_inode(struct Ext2FSInode * 
 
 	//TODO: Ejercicio 3
 
+	if (from->blocks == 0) return NULL;
+
+	unsigned int block_size = 1024 << _superblock->log_block_size;
+
+	unsigned char buffer[block_size];
+	
+
+
+
+
+	// Para empezar leemos el bloque 0
+	unsigned int numero_bloque_actual = 0;
+	while(numero_bloque_actual < from->blocks)
+	{
+		unsigned int bloque_actual_fisico = get_block_address(from, numero_bloque_actual);
+		read_block(bloque_actual_fisico, buffer);
+
+		unsigned int donde_empieza = 0;
+		while(donde_empieza < block_size)
+		{		
+
+			Ext2FSDirEntry* mi_entrada = (Ext2FSDirEntry*) (buffer + donde_empieza);
+
+			// Me fijo si el nombre de esta entrada es la del archivo que tengo que encontrar
+			if (strncmp(mi_entrada->name, filename, strlen(filename)) == 0) return (load_inode(mi_entrada->inode));
+
+			// No era este, me fijo el siguiente
+
+			donde_empieza += mi_entrada->record_length;
+			//No puede haber directory entrys partidos. 
+		}
+
+
+		// El archivo no estaba en este bloque, leo el siguiente
+		numero_bloque_actual++;
+	
+
+	}
+
+	printf("NO EXISTE EL ARCHIVO..\n");
+
+
+
+return NULL;
+
+
+
+
 }
 
 fd_t Ext2FS::get_free_fd()
 {
 	for(fd_t fd = 0; fd < EXT2_MAX_OPEN_FILES; fd++)
 	{
-		// Warning: This is inefficient
+		// Warning: This is inefficients
 		if(!(_fd_status[fd/sizeof(unsigned int)] & (1 << (fd % sizeof(unsigned int)))))
 			return fd;
 	}

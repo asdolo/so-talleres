@@ -59,5 +59,17 @@ int main(int argc, char ** argv)
 
 	//TODO: Completar el código del último ejercicio acá
 
+	fd_t fd = fs->open("/grupos/g1/nota.txt", "r");
+
+	unsigned char buf[51];
+	int s = fs->seek(fd, 14000-1);
+	printf("s: %d\n", s);
+	int r = fs->read(fd, buf, 50);
+	printf("r: %d\n", r);
+	buf[51] = 0;
+	printf("%s\n", buf);
+	fs->close(fd);
+
+
 	return 0;
 }
